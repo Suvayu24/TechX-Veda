@@ -118,4 +118,6 @@ footer{background:#082624}footer p,footer>a{font-size:14px}footer small{font-siz
 .qr-code img{display:block;width:100%;height:100%;object-fit:contain}
 
 .brand em,.footer-brand em{color:#a9822f}
+
+@media(max-width:800px){.nav-links a{color:#000}}
 .brand em,.footer-brand em{color:var(--gold)}
