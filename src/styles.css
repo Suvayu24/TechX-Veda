@@ -119,5 +119,5 @@ footer{background:#082624}footer p,footer>a{font-size:14px}footer small{font-siz
 
 .brand em,.footer-brand em{color:#a9822f}
 
-@media(max-width:800px){.nav-links a{color:#000}}
+@media(max-width:800px){.nav:not(.nav-scrolled) .nav-links.is-open a{color:#000!important}}
 .brand em,.footer-brand em{color:var(--gold)}
