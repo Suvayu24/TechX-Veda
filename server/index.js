@@ -2,9 +2,13 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 const port = process.env.PORT || 5000;
+const serverDirectory = path.dirname(fileURLToPath(import.meta.url));
+const clientBuildDirectory = path.resolve(serverDirectory, "../dist");
 
 app.use(cors());
 app.use(express.json());
@@ -93,6 +97,11 @@ app.post("/api/registrations", async (req, res) => {
   }
 });
 
+app.use(express.static(clientBuildDirectory));
+app.get("/{*splat}", (_req, res) => {
+  res.sendFile(path.join(clientBuildDirectory, "index.html"));
+});
+
 const databaseUrl = process.env.MONGODB_URI;
 if (!databaseUrl) {
   console.warn(
@@ -105,4 +114,6 @@ if (!databaseUrl) {
     .catch((error) => console.error("MongoDB connection failed", error));
 }
 
-app.listen(port, () => console.log(`TechX Veda API listening on ${port}`));
+app.listen(port, "0.0.0.0", () =>
+  console.log(`TechX Veda service listening on ${port}`),
+);
