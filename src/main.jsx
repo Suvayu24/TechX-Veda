@@ -207,12 +207,11 @@ function App() {
             </div>
           </div>
           <div className="hero-copy">
-            <p className="kicker"></p>
-            <h1>
-              WINTER
-              <br />
-              <span>BOOTCAMP</span>
+            <h1 className="hero-title">
+              <span className="hero-title-techx">TechX</span>
+              <span className="hero-title-veda">Veda</span>
             </h1>
+            <p className="hero-subtitle">Winter Bootcamp</p>
             <p className="hero-description">
               A ten-day programme combining technical learning, personal
               development and experiential education.
@@ -341,16 +340,11 @@ function App() {
                 <br />
                 <em>for more.</em>
               </h2>
-              <p>Scan the QR code or use the link below.</p>
+              <p>Register online using the link below.</p>
 
               <a className="button button-gold" href="/register">
                 Register Now <b>↗</b>
               </a>
-            </div>
-            <div className="qr-frame">
-              <div className="qr-code">
-                <img src="/QR.png" alt="QR code for registration" />
-              </div>
             </div>
           </div>
         </section>
