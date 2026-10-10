@@ -141,12 +141,17 @@ footer{background:#082624}footer p,footer>a{font-size:14px}footer small{font-siz
   font-family:var(--serif);
   font-style:italic;
   font-weight:500;
-  letter-spacing:-.1em;
+  /* Keep the terminal italic "a" clear of the preceding letter and its stroke. */
+  letter-spacing:-.055em;
+  padding-right:.1em;
+  margin-right:-.1em;
+  overflow:visible;
   background:linear-gradient(145deg,#fff3b6 4%,#e5c45c 34%,#9a6b16 55%,#f6dc76 77%,#bd8a22 100%);
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
   -webkit-text-stroke:1px rgba(237,241,239,.82);
+  paint-order:stroke fill;
   filter:drop-shadow(0 1px 0 rgba(86,97,101,.95)) drop-shadow(0 5px 12px rgba(0,0,0,.28));
 }
 .hero-subtitle{
