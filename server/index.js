@@ -13,27 +13,108 @@ const clientBuildDirectory = path.resolve(serverDirectory, "../dist");
 app.use(cors());
 app.use(express.json());
 
+const requiredText = (maxlength) => ({
+  type: String,
+  required: true,
+  trim: true,
+  maxlength,
+});
+
+const namePattern = /^[A-Za-z]+(?:\s+[A-Za-z]+)*$/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const phonePattern = /^\d+$/;
+const yearOptions = [
+  "1st year",
+  "2nd year",
+  "3rd year",
+  "4th year",
+  "5th year",
+  "Postgraduate",
+];
+const genderOptions = ["Female", "Male", "Non-binary", "Prefer not to say"];
+
+const withWordLimit = (maxlength, words) => ({
+  ...requiredText(maxlength),
+  validate: {
+    validator: (value) => String(value).trim().split(/\s+/).length <= words,
+    message: `Response must be ${words} words or fewer.`,
+  },
+});
+
 const registrationSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, trim: true, maxlength: 120 },
+    fullName: {
+      ...requiredText(120),
+      validate: {
+        validator: (value) => namePattern.test(String(value).trim()),
+        message: "Full name can contain letters and spaces only.",
+      },
+    },
     email: {
+      ...requiredText(254),
+      lowercase: true,
+      validate: {
+        validator: (value) => emailPattern.test(String(value).trim()),
+        message: "Please enter a valid email address.",
+      },
+    },
+    whatsappNumber: {
+      ...requiredText(24),
+      validate: {
+        validator: (value) => phonePattern.test(String(value)),
+        message: "Mobile number can contain digits only.",
+      },
+    },
+    collegeName: requiredText(160),
+    programme: requiredText(120),
+    branch: requiredText(120),
+    year: {
       type: String,
       required: true,
-      trim: true,
-      lowercase: true,
-      maxlength: 254,
+      enum: yearOptions,
     },
-    whatsappNumber: { type: String, required: true, trim: true, maxlength: 24 },
+    residence: requiredText(160),
     gender: {
       type: String,
       required: true,
-      enum: ["Female", "Male", "Non-binary", "Prefer not to say"],
+      enum: genderOptions,
     },
-    enrollmentNumber: {
-      type: String,
+    introduction: withWordLimit(1800, 200),
+    combination: withWordLimit(1400, 150),
+    values: withWordLimit(1400, 150),
+    contribution: withWordLimit(1400, 150),
+    technicalExperience: withWordLimit(1400, 150),
+    selectionAcknowledgement: {
+      type: Boolean,
       required: true,
-      trim: true,
-      maxlength: 80,
+      validate: {
+        validator: (value) => value === true,
+        message: "The selection acknowledgement must be accepted.",
+      },
+    },
+    respectfulParticipation: {
+      type: Boolean,
+      required: true,
+      validate: {
+        validator: (value) => value === true,
+        message: "The participation declaration must be accepted.",
+      },
+    },
+    informationAccurate: {
+      type: Boolean,
+      required: true,
+      validate: {
+        validator: (value) => value === true,
+        message: "The accuracy declaration must be accepted.",
+      },
+    },
+    fullCommitment: {
+      type: Boolean,
+      required: true,
+      validate: {
+        validator: (value) => value === true,
+        message: "The programme commitment must be accepted.",
+      },
     },
   },
   { timestamps: true },
@@ -41,40 +122,88 @@ const registrationSchema = new mongoose.Schema(
 
 const Registration = mongoose.model("Registration", registrationSchema);
 const normalise = (value) => String(value || "").trim();
+const countWords = (value) => normalise(value).match(/\S+/g)?.length || 0;
+
+function validateRegistration(registration) {
+  const requiredFields = [
+    ["fullName", "full name"],
+    ["email", "email address"],
+    ["whatsappNumber", "mobile number"],
+    ["collegeName", "college"],
+    ["programme", "programme"],
+    ["branch", "branch"],
+    ["year", "year"],
+    ["residence", "hostel / residence"],
+    ["gender", "gender"],
+    ["introduction", "response 01"],
+    ["combination", "response 02"],
+    ["values", "response 03"],
+    ["contribution", "response 04"],
+    ["technicalExperience", "response 05"],
+  ];
+  const missingField = requiredFields.find(([key]) => !registration[key]);
+  if (missingField) return `Please complete your ${missingField[1]}.`;
+  if (!namePattern.test(registration.fullName)) {
+    return "Full name can contain letters and spaces only.";
+  }
+  if (!emailPattern.test(registration.email)) return "Please enter a valid email address.";
+  if (!phonePattern.test(registration.whatsappNumber)) {
+    return "Mobile number can contain digits only.";
+  }
+  if (!yearOptions.includes(registration.year)) return "Please select a valid year.";
+  if (!genderOptions.includes(registration.gender)) return "Please select a valid gender.";
+  const wordLimits = [
+    ["introduction", "01", 200],
+    ["combination", "02", 150],
+    ["values", "03", 150],
+    ["contribution", "04", 150],
+    ["technicalExperience", "05", 150],
+  ];
+  const tooLong = wordLimits.find(([key, , limit]) => countWords(registration[key]) > limit);
+  if (tooLong) return `Please shorten response ${tooLong[1]} to ${tooLong[2]} words or fewer.`;
+  if (![registration.selectionAcknowledgement, registration.respectfulParticipation, registration.informationAccurate, registration.fullCommitment].every(Boolean)) {
+    return "Please accept all four declaration statements.";
+  }
+  return "";
+}
 
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true, database: mongoose.connection.readyState === 1 });
 });
 
 app.post("/api/registrations", async (req, res) => {
+  const registration = {
+    fullName: normalise(req.body.fullName),
+    email: normalise(req.body.email).toLowerCase(),
+    whatsappNumber: String(req.body.whatsappNumber || ""),
+    collegeName: normalise(req.body.collegeName),
+    programme: normalise(req.body.programme),
+    branch: normalise(req.body.branch),
+    year: normalise(req.body.year),
+    residence: normalise(req.body.residence),
+    gender: normalise(req.body.gender),
+    introduction: normalise(req.body.introduction),
+    combination: normalise(req.body.combination),
+    values: normalise(req.body.values),
+    contribution: normalise(req.body.contribution),
+    technicalExperience: normalise(req.body.technicalExperience),
+    selectionAcknowledgement: req.body.selectionAcknowledgement === true,
+    respectfulParticipation: req.body.respectfulParticipation === true,
+    informationAccurate: req.body.informationAccurate === true,
+    fullCommitment: req.body.fullCommitment === true,
+  };
+
+  const validationMessage = validateRegistration(registration);
+  if (validationMessage) {
+    return res.status(400).json({
+      message: validationMessage,
+      code: "VALIDATION_ERROR",
+    });
+  }
   if (mongoose.connection.readyState !== 1) {
     return res
       .status(503)
       .json({ message: "Registration service is not configured yet." });
-  }
-
-  const registration = {
-    name: normalise(req.body.name),
-    email: normalise(req.body.email).toLowerCase(),
-    whatsappNumber: normalise(req.body.whatsappNumber),
-    gender: normalise(req.body.gender),
-    enrollmentNumber: normalise(req.body.enrollmentNumber),
-  };
-
-  if (Object.values(registration).some((value) => !value)) {
-    return res
-      .status(400)
-      .json({ message: "Please complete every required field." });
-  }
-  if (!/^\S+@\S+\.\S+$/.test(registration.email)) {
-    return res
-      .status(400)
-      .json({ message: "Please enter a valid email address." });
-  }
-  if (!/^[0-9+() -]{10,20}$/.test(registration.whatsappNumber)) {
-    return res
-      .status(400)
-      .json({ message: "Please enter a valid WhatsApp number." });
   }
 
   try {
@@ -84,9 +213,10 @@ app.post("/api/registrations", async (req, res) => {
       .json({ message: "Registration submitted successfully." });
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
+      const firstValidationMessage = Object.values(error.errors)[0]?.message;
       return res
         .status(400)
-        .json({ message: "Please check the information you entered." });
+        .json({ message: firstValidationMessage || "Please check the information you entered." });
     }
     console.error("Registration submission failed", error);
     return res

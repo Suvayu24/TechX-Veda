@@ -168,6 +168,25 @@ function FeatureCard({ item, index }) {
 function App() {
   const reduce = useReducedMotion();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [registerGlow, setRegisterGlow] = useState({
+    x: "50%",
+    y: "50%",
+    visible: false,
+  });
+  const [aboutGlow, setAboutGlow] = useState({
+    x: "50%",
+    y: "50%",
+    visible: false,
+  });
+  const moveGlow = (event, setGlow) => {
+    if (event.pointerType && event.pointerType !== "mouse") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    setGlow({
+      x: `${event.clientX - bounds.left}px`,
+      y: `${event.clientY - bounds.top}px`,
+      visible: true,
+    });
+  };
   useEffect(() => {
     if (reduce) return undefined;
     const timer = window.setInterval(
@@ -217,48 +236,74 @@ function App() {
               development and experiential education.
             </p>
             <div className="hero-meta">
-              <span>6–15 December 2026</span>
-              <span>Govardhan Ecovillage</span>
+              <span>8th - 12th December 2026 - IITB Campus</span>
+              <span>13th - 17th December 2026 - Govardhan Eco Village</span>
             </div>
             <div className="hero-actions">
               <a className="button button-light" href="#register">
                 Register now <b>↗</b>
               </a>
-              <a className="text-link" href="#wellness">
+              <a className="text-link" href="#about">
                 Explore the programme <span>↓</span>
               </a>
             </div>
           </div>
         </section>
 
-        <section className="pillars">
-          <div className="pillar">
-            <span>01</span>
-            <h3>Wellness</h3>
-            <p>Meditation, yoga and life skills</p>
-          </div>
-          <div className="pillar">
-            <span>02</span>
-            <h3>Career</h3>
-            <p>AI & ML, hackathon and mentorship</p>
-          </div>
-          <div className="pillar">
-            <span>03</span>
-            <h3>Culture</h3>
-            <p>Service, sustainability and shared experiences</p>
-          </div>
-        </section>
-
-        <section className="partners" aria-label="Our partners">
-          <p className="partners-kicker"><h2>PRESENTED BY</h2></p>
-          
-          <div className="partners-logos">
-            {partnerLogos.map((logo) => (
-              <div className="partner-logo" key={logo.src}>
-                <img src={logo.src} alt={logo.alt} />
+        <section
+          id="about"
+          className={`about-section ${aboutGlow.visible ? "has-cursor-glow" : ""}`}
+          style={{ "--glow-x": aboutGlow.x, "--glow-y": aboutGlow.y }}
+          onPointerMove={(event) => moveGlow(event, setAboutGlow)}
+          onPointerLeave={() =>
+            setAboutGlow((glow) => ({ ...glow, visible: false }))
+          }
+        >
+          <motion.div
+            className="about-content"
+            initial={{ opacity: 0, y: 34 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <p className="about-kicker">The programme</p>
+            <h2>
+              What is <em>TechX Veda?</em>
+            </h2>
+            <p className="about-description">
+              TechX Veda is a ten-day programme for students who want to
+              develop competence with character. Alongside technical learning
+              and career mentorship, the camp includes wellness, Indian
+              wisdom, service, sustainability and cultural experiences.
+            </p>
+            <div className="about-details">
+              <div>
+                <strong>Programme</strong>
+                <span>Career &bull; Wellness &bull; Culture</span>
               </div>
-            ))}
-          </div>
+              <div>
+                <strong>Selection</strong>
+                <span>Application screening</span>
+              </div>
+              <div>
+                <strong>Support</strong>
+                <span>&#8377;3,000 + travel</span>
+              </div>
+            </div>
+            <div className="about-partners" aria-label="Our partners">
+              <p className="partners-kicker">Presented by</p>
+              <div className="partners-logos">
+                {partnerLogos.map((logo) => (
+                  <div className="partner-logo" key={logo.src}>
+                    <img src={logo.src} alt={logo.alt} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+          <p className="about-scroll-note">
+            Scroll down to see events <span>↓</span>
+          </p>
         </section>
 
         <section className="section" id="wellness">
@@ -332,7 +377,14 @@ function App() {
         <section className="register" id="register">
           <div className="register-orbit orbit-one" />
           <div className="register-orbit orbit-two" />
-          <div className="register-inner">
+          <div
+            className={`register-inner ${registerGlow.visible ? "has-cursor-glow" : ""}`}
+            style={{ "--glow-x": registerGlow.x, "--glow-y": registerGlow.y }}
+            onPointerMove={(event) => moveGlow(event, setRegisterGlow)}
+            onPointerLeave={() =>
+              setRegisterGlow((glow) => ({ ...glow, visible: false }))
+            }
+          >
             <div>
               <p className="eyebrow">The next chapter</p>
               <h2>
