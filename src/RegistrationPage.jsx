@@ -123,10 +123,11 @@ export default function RegistrationPage() {
           <FormSection number="A" title="Candidate Details">
             <div className="form-grid">
               <label className="form-span-two"><span>Full name *</span><input name="fullName" value={form.fullName} onChange={updateField} autoComplete="name" required placeholder="Your full name" /></label>
-              <label className="form-span-two"><span>Enrollment number *</span><input name="enrollmentNumber" value={form.enrollmentNumber} onChange={updateField} placeholder="College enrollment number" maxLength="80" /></label>
+              
               <label><span>Email address *</span><input name="email" type="email" value={form.email} onChange={updateField} autoComplete="email" required placeholder="you@example.com" /></label>
               <label><span>Mobile number *</span><input name="whatsappNumber" type="tel" inputMode="numeric" value={form.whatsappNumber} onChange={updateField} autoComplete="tel" required placeholder="1234567890" maxLength="24" /></label>
               <label className="form-span-two"><span>College *</span><input name="collegeName" value={form.collegeName} onChange={updateField} required placeholder="Name of your college" /></label>
+              <label className="form-span-two"><span>Enrollment number *</span><input name="enrollmentNumber" value={form.enrollmentNumber} onChange={updateField} placeholder="College enrollment number" maxLength="80" /></label>
               <label><span>Programme *</span><input name="programme" value={form.programme} onChange={updateField} required placeholder="e.g. B.Tech" /></label>
               <label><span>Branch *</span><input name="branch" value={form.branch} onChange={updateField} required placeholder="e.g. Computer Science" /></label>
               <label><span>Year *</span><select name="year" value={form.year} onChange={updateField} required><option value="" disabled>Select year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>5th year</option><option>Postgraduate</option></select></label>
