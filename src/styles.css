@@ -2936,3 +2936,154 @@ footer small {
 .nav .brand em {
   color: #9a6b16;
 }
+
+/* Feature-card headings use the same clean sans-serif voice as "TechX" in the hero. */
+.feature-copy h3 {
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -.075em;
+}
+
+/* Selection steps sit above the application as a clear, glass-like workflow card. */
+.selection-timeline {
+  grid-column: 1 / -1;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(26px, 3.2vw, 42px);
+  border: 1px solid rgba(242, 238, 229, .28);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(246, 240, 224, .17), rgba(242, 217, 133, .08));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .16), inset 0 1px 0 rgba(255, 255, 255, .22);
+  color: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.selection-timeline:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 330px;
+  aspect-ratio: 1;
+  top: -240px;
+  right: -110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(242, 217, 133, .23), transparent 68%);
+}
+
+.selection-timeline-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.selection-timeline-heading p {
+  margin: 0;
+  color: #f2d985;
+  font: 700 10px/1 var(--sans);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.selection-timeline-heading h2 {
+  margin: 0;
+  font: 500 clamp(25px, 2.5vw, 38px)/1 var(--serif);
+  letter-spacing: -.05em;
+}
+
+.selection-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.selection-steps:before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 12.5%;
+  left: 12.5%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(242, 217, 133, .35), #f2d985, rgba(242, 217, 133, .35));
+}
+
+.selection-steps li {
+  position: relative;
+  z-index: 1;
+  color: #f7f4ed;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.selection-step-number {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 12px;
+  border: 1px solid rgba(242, 217, 133, .8);
+  border-radius: 50%;
+  place-items: center;
+  background: #174b45;
+  color: #f8e7a5;
+  box-shadow: 0 0 0 5px rgba(20, 67, 62, .68);
+  font: 700 9px/1 var(--sans);
+  letter-spacing: .08em;
+}
+
+.selection-steps small {
+  display: block;
+  margin-top: 5px;
+  color: #f2d985;
+  font-size: 12px;
+}
+
+@media (max-width: 800px) {
+  .selection-timeline {
+    padding: 25px 22px;
+    border-radius: 18px;
+  }
+
+  .selection-timeline-heading {
+    display: block;
+    margin-bottom: 25px;
+  }
+
+  .selection-timeline-heading p {
+    margin-bottom: 10px;
+  }
+
+  .selection-steps {
+    gap: 20px;
+  }
+
+  .selection-steps:before {
+    top: 15px;
+    bottom: 15px;
+    left: 15px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(242, 217, 133, .35), #f2d985, rgba(242, 217, 133, .35));
+  }
+
+  .selection-steps li {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 14px;
+    align-items: start;
+    text-align: left;
+  }
+
+  .selection-step-number {
+    margin: 0;
+  }
+}

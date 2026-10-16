@@ -264,7 +264,6 @@ function App() {
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            
             <div className="about-partners" aria-label="Our partners">
               <p className="partners-kicker">Presented by</p>
               <div className="partners-logos">

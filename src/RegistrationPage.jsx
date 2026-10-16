@@ -99,6 +99,17 @@ export default function RegistrationPage() {
       <div className="registration-backdrop" />
       <header className="registration-nav"><a href="/" className="brand">TechX <em>Veda</em></a><a href="/" className="back-link">← Back to programme</a></header>
       <motion.section className="registration-layout application-layout" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
+        <section className="selection-timeline" aria-labelledby="selection-timeline-title">
+          <div className="selection-timeline-heading">
+            <p>Selection process</p>
+          </div>
+          <ol className="selection-steps">
+            <li><span className="selection-step-number">01</span><span>Application submission</span></li>
+            <li><span className="selection-step-number">02</span><span>Application review &amp; results declaration</span></li>
+            <li><span className="selection-step-number">03</span><span>Interview</span></li>
+            <li><span className="selection-step-number">04</span><span>Final selection &amp; payment <small>₹3,000 + travel expenses</small></span></li>
+          </ol>
+        </section>
         <aside className="registration-intro application-intro">
           <p className="eyebrow">Winter Bootcamp 2026</p><h1>TechX <em>Veda</em></h1>
           <p className="registration-description">An eight-day residential programme for students who want to develop competence with character.</p>
