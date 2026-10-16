@@ -136,14 +136,14 @@ export default function RegistrationPage() {
             </div>
           </FormSection>
           <FormSection number="B" title="Short-answer questions">
-            {questions.map(([name, number, limit, question]) => <label className="essay-question" key={name}><span className="question-number">{number}</span><span className="question-text">{number}. {question} (Max {limit} words) *</span><textarea name={name} value={form[name]} onChange={updateField} required rows="6" maxLength={limit * 8} placeholder="Write your response here..." /><WordCounter value={form[name]} limit={limit} /></label>)}
+            {questions.map(([name, number, limit, question]) => <label className="essay-question" key={name}><span className="question-number">{number}</span><span className="question-text">{question} (Max {limit} words) *</span><textarea name={name} value={form[name]} onChange={updateField} required rows="6" maxLength={limit * 8} placeholder="Write your response here..." /><WordCounter value={form[name]} limit={limit} /></label>)}
           </FormSection>
           <FormSection number="D" title="Declaration">
             <div className="declaration-items">
               <label className="declaration"><input name="selectionAcknowledgement" type="checkbox" checked={form.selectionAcknowledgement} onChange={updateField} required /><span>I understand that this is a selection-based application and final registration is offered only to selected students.</span></label>
               <label className="declaration"><input name="respectfulParticipation" type="checkbox" checked={form.respectfulParticipation} onChange={updateField} required /><span>I am willing to participate respectfully in the Career, Wellness and Culture components, including reflective and spiritual sessions.</span></label>
               <label className="declaration"><input name="informationAccurate" type="checkbox" checked={form.informationAccurate} onChange={updateField} required /><span>I confirm that the information provided is accurate and written by me.</span></label>
-              <label className="declaration"><input name="fullCommitment" type="checkbox" checked={form.fullCommitment} onChange={updateField} required /><span>Yes, I commit to the complete programme and attend full bootcamp from 6th to 15th Dec 2026.</span></label>
+              <label className="declaration"><input name="fullCommitment" type="checkbox" checked={form.fullCommitment} onChange={updateField} required /><span>Yes, I commit to the complete programme and attend full bootcamp from 13th to 20th Dec 2026.</span></label>
             </div>
           </FormSection>
           {message && <p className={`form-message ${status}`} role={status === "error" ? "alert" : "status"}>{message}</p>}
