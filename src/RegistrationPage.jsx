@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-const initialForm = { fullName: "", email: "", whatsappNumber: "", collegeName: "", programme: "", branch: "", year: "", residence: "", gender: "", introduction: "", combination: "", values: "", contribution: "", technicalExperience: "", selectionAcknowledgement: false, respectfulParticipation: false, informationAccurate: false, fullCommitment: false };
+const initialForm = { fullName: "", enrollmentNumber: "", email: "", whatsappNumber: "", collegeName: "", programme: "", branch: "", year: "", residence: "", gender: "", introduction: "", combination: "", values: "", contribution: "", technicalExperience: "", selectionAcknowledgement: false, respectfulParticipation: false, informationAccurate: false, fullCommitment: false };
 
 const questions = [
   ["introduction", "01", 200, "Introduce yourself. Tell us about your academic interests, key strengths, skills, what you enjoy beyond your regular coursework, and what kind of student you are."],
@@ -75,7 +75,7 @@ export default function RegistrationPage() {
     setStatus("submitting");
     setMessage("");
     try {
-      const payload = { ...form, fullName: form.fullName.trim(), email: form.email.trim(), whatsappNumber: form.whatsappNumber, collegeName: form.collegeName.trim(), programme: form.programme.trim(), branch: form.branch.trim(), residence: form.residence.trim() };
+      const payload = { ...form, fullName: form.fullName.trim(), enrollmentNumber: form.enrollmentNumber.trim(), email: form.email.trim(), whatsappNumber: form.whatsappNumber, collegeName: form.collegeName.trim(), programme: form.programme.trim(), branch: form.branch.trim(), residence: form.residence.trim() };
       const response = await fetch("/api/registrations", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) {
@@ -86,7 +86,7 @@ export default function RegistrationPage() {
         throw new Error(responseMessage);
       }
       setStatus("success");
-      setMessage(result.message || "Your application has been submitted successfully.");
+      setMessage(result.message || "Your application has been submitted successfully. We will reach you out personally once your application gets approved.");
       setForm(initialForm);
     } catch (error) {
       setStatus("error");
@@ -101,17 +101,18 @@ export default function RegistrationPage() {
       <motion.section className="registration-layout application-layout" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
         <aside className="registration-intro application-intro">
           <p className="eyebrow">Winter Bootcamp 2026</p><h1>TechX <em>Veda</em></h1>
-          <p className="registration-description">A ten-day residential programme for students who want to develop competence with character.</p>
+          <p className="registration-description">An eight-day residential programme for students who want to develop competence with character.</p>
           <p className="application-intro-copy">Alongside technical learning and career mentorship, the camp includes wellness, Indian wisdom, service, sustainability and cultural experiences.</p>
           <div className="application-note"><span>Before you begin</span><p>Please answer in your own words. Short, specific examples are more useful than impressive general statements. Originality will be appreciated. Submitting this form does not guarantee selection; applications will be screened and selected students will be invited to complete registration.</p></div>
-          <dl className="registration-details camp-schedule"><div><dt>When &amp; where</dt><dd><span>8th - 12th December 2026 @ IITB Campus</span><span>13th - 17th December 2026 @ Govardhan Eco Village</span></dd></div></dl>
+          <dl className="registration-details camp-schedule"><div><dt>When &amp; where</dt><dd><span>13th - 16th December 2026 @ IITB Campus</span><span>17th - 20th December 2026 @ Govardhan Eco Village</span></dd></div></dl>
         </aside>
 
         <form className="registration-form application-form" onSubmit={submitForm} noValidate>
-          <div className="form-heading"><p className="eyebrow">Winter Bootcamp 2026</p><h2>Student Application Form</h2><p>All fields are required.</p></div>
+          <div className="form-heading"><p className="eyebrow">Winter Bootcamp 2026</p><h2>Student Application Form</h2><p>Fields marked * are required.</p></div>
           <FormSection number="A" title="Candidate Details">
             <div className="form-grid">
               <label className="form-span-two"><span>Full name *</span><input name="fullName" value={form.fullName} onChange={updateField} autoComplete="name" required placeholder="Your full name" /></label>
+              <label className="form-span-two"><span>Enrollment number *</span><input name="enrollmentNumber" value={form.enrollmentNumber} onChange={updateField} placeholder="College enrollment number" maxLength="80" /></label>
               <label><span>Email address *</span><input name="email" type="email" value={form.email} onChange={updateField} autoComplete="email" required placeholder="you@example.com" /></label>
               <label><span>Mobile number *</span><input name="whatsappNumber" type="tel" inputMode="numeric" value={form.whatsappNumber} onChange={updateField} autoComplete="tel" required placeholder="1234567890" maxLength="24" /></label>
               <label className="form-span-two"><span>College *</span><input name="collegeName" value={form.collegeName} onChange={updateField} required placeholder="Name of your college" /></label>

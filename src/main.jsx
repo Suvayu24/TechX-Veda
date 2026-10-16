@@ -7,17 +7,15 @@ import "./styles.css";
 
 const registrationUrl = "https://tinyurl.com/TechXVeda2026";
 const heroImages = [
-  { src: "/hero-campus.jpg", alt: "Govardhan Ecovillage campus courtyard" },
-  { src: "/hero-govardhan.jpg", alt: "Green Govardhan Ecovillage landscape" },
-  {
-    src: "/hero-landscape.jpg",
-    alt: "Pavilion and water garden at Govardhan Ecovillage",
-  },
+  { src: "/hero_ (1).png", alt: "TechX Veda programme" },
+  { src: "/hero_ (2).png", alt: "TechX Veda programme" },
+  { src: "/hero_ (3).png", alt: "TechX Veda programme" },
+  { src: "/hero_ (4).png", alt: "TechX Veda programme" },
 ];
 const partnerLogos = [
-  { src: "/Logo_1_transparent.png", alt: "IIT Bombay" },
-  { src: "/Logo_2_transparent.png", alt: "Microsoft" },
-  { src: "/Logo_3_transparent.png", alt: "UMEED Agents Of Hope" },
+  { src: "/logo-1.png", alt: "IIT Bombay" },
+  { src: "/logo-2.png", alt: "Microsoft" },
+  { src: "/logo-3.png", alt: "UMEED Agents Of Hope" },
 ];
 
 const wellness = [
@@ -232,12 +230,12 @@ function App() {
             </h1>
             <p className="hero-subtitle">Winter Bootcamp</p>
             <p className="hero-description">
-              A ten-day programme combining technical learning, personal
+              An eight-day programme combining technical learning, personal
               development and experiential education.
             </p>
             <div className="hero-meta">
-              <span>8th - 12th December 2026 - IITB Campus</span>
-              <span>13th - 17th December 2026 - Govardhan Eco Village</span>
+              <span>13th - 16th December 2026 - IITB Campus</span>
+              <span>17th - 20th December 2026 - Govardhan Eco Village</span>
             </div>
             <div className="hero-actions">
               <a className="button button-light" href="#register">
@@ -266,17 +264,42 @@ function App() {
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
+            
+            <div className="about-partners" aria-label="Our partners">
+              <p className="partners-kicker">Presented by</p>
+              <div className="partners-logos">
+                {partnerLogos.map((logo) => (
+                  <div className="partner-logo" key={logo.src}>
+                    <img src={logo.src} alt={logo.alt} />
+                  </div>
+                ))}
+              </div>
+            </div>
             <p className="about-kicker">The programme</p>
             <h2>
-              What is <em>TechX Veda?</em>
+              What is <span className="hero-title-techx">TechX </span><span className="hero-title-veda">Veda</span>?
             </h2>
             <p className="about-description">
-              TechX Veda is a ten-day programme for students who want to
+              TechX Veda is an eight-day programme for students who want to
               develop competence with character. Alongside technical learning
               and career mentorship, the camp includes wellness, Indian
               wisdom, service, sustainability and cultural experiences.
             </p>
             <div className="about-details">
+              <div>
+                <strong>WELLNESS</strong>
+                
+              </div>
+              <div>
+                <strong>CAREER</strong>
+                
+              </div>
+              <div>
+                <strong>CULTURE</strong>
+                
+              </div>
+            </div>
+            {/* <div className="about-details">
               <div>
                 <strong>Programme</strong>
                 <span>Career &bull; Wellness &bull; Culture</span>
@@ -289,17 +312,7 @@ function App() {
                 <strong>Support</strong>
                 <span>&#8377;3,000 + travel</span>
               </div>
-            </div>
-            <div className="about-partners" aria-label="Our partners">
-              <p className="partners-kicker">Presented by</p>
-              <div className="partners-logos">
-                {partnerLogos.map((logo) => (
-                  <div className="partner-logo" key={logo.src}>
-                    <img src={logo.src} alt={logo.alt} />
-                  </div>
-                ))}
-              </div>
-            </div>
+            </div> */}
           </motion.div>
           <p className="about-scroll-note">
             Scroll down to see events <span>↓</span>
@@ -407,11 +420,8 @@ function App() {
         </div>
         <div>
           <p className="eyebrow">Winter Bootcamp 2026</p>
-          <p>6-15 December 2026 · Govardhan Ecovillage</p>
+          <p>13-20 December 2026 · Govardhan Ecovillage</p>
         </div>
-        <a href={registrationUrl} target="_blank" rel="noreferrer">
-          tinyurl.com/TechXVeda2026 ↗
-        </a>
         <small>TECHX VEDA / 2026</small>
       </footer>
     </div>
