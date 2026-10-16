@@ -3032,11 +3032,24 @@ footer small {
   border: 1px solid rgba(242, 217, 133, .8);
   border-radius: 50%;
   place-items: center;
-  background: #174b45;
+  overflow: hidden;
+  background-color: #174b45;
+  background-image: radial-gradient(circle, var(--terracotta) 0 68%, transparent 70%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 0 0;
   color: #f8e7a5;
   box-shadow: 0 0 0 5px rgba(20, 67, 62, .68);
   font: 700 9px/1 var(--sans);
   letter-spacing: .08em;
+  transition: background-size .32s ease, border-color .32s ease, color .32s ease, transform .32s ease;
+}
+
+.selection-steps li:hover .selection-step-number {
+  background-size: 150% 150%;
+  border-color: #f7d87a;
+  color: #fffaf0;
+  transform: scale(1.08);
 }
 
 .selection-steps small {
