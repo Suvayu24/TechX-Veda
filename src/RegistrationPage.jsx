@@ -104,16 +104,15 @@ export default function RegistrationPage() {
             <p>Selection process</p>
           </div>
           <ol className="selection-steps">
-            <li><span className="selection-step-number">01</span><span>Application submission</span></li>
-            <li><span className="selection-step-number">02</span><span>Application review &amp; results declaration</span></li>
+            <li><span className="selection-step-number">01</span><span>Application Submission</span></li>
+            <li><span className="selection-step-number">02</span><span>Application Review &amp; Results Declaration</span></li>
             <li><span className="selection-step-number">03</span><span>Interview</span></li>
-            <li><span className="selection-step-number">04</span><span>Final selection &amp; payment <small>₹3,000 + travel expenses</small></span></li>
+            <li><span className="selection-step-number">04</span><span>Final Selection &amp; Payment <small>₹3,000 + travel expenses</small></span></li>
           </ol>
         </section>
         <aside className="registration-intro application-intro">
-          <p className="eyebrow">Winter Bootcamp 2026</p><h1>TechX <em>Veda</em></h1>
+          <h1>TechX <em>Veda</em></h1>
           <p className="registration-description">An eight-day residential programme for students who want to develop competence with character.</p>
-          <p className="application-intro-copy">Alongside technical learning and career mentorship, the camp includes wellness, Indian wisdom, service, sustainability and cultural experiences.</p>
           <div className="application-note"><span>Before you begin</span><p>Please answer in your own words. Short, specific examples are more useful than impressive general statements. Originality will be appreciated. Submitting this form does not guarantee selection; applications will be screened and selected students will be invited to complete registration.</p></div>
           <dl className="registration-details camp-schedule"><div><dt>When &amp; where</dt><dd><span>13th - 16th December 2026 @ IITB Campus</span><span>17th - 20th December 2026 @ Govardhan Eco Village</span></dd></div></dl>
         </aside>

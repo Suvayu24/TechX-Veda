@@ -66,7 +66,7 @@ const career = [
 ];
 const culture = [
   [
-    "Sustainability visits",
+    "Sustainability visits", 
     "Organic farming and environmental projects, including water and energy conservation.",
     "/Culture_1.png",
   ],
@@ -93,6 +93,7 @@ function Navbar() {
   }, []);
   const links = [
     ["Home", "home"],
+    ["About Us", "about"],
     ["Wellness", "wellness"],
     ["Career", "career"],
     ["Culture", "culture"],
@@ -189,7 +190,7 @@ function App() {
     if (reduce) return undefined;
     const timer = window.setInterval(
       () => setActiveSlide((slide) => (slide + 1) % heroImages.length),
-      5200,
+      8200,
     );
     return () => window.clearInterval(timer);
   }, [reduce]);
@@ -199,15 +200,21 @@ function App() {
       <main>
         <section className="hero" id="home">
           <div className="hero-background" aria-hidden="true">
-            <motion.img
-              key={heroImages[activeSlide].src}
-              className="hero-background-image"
-              src={heroImages[activeSlide].src}
-              alt=""
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9 }}
-            />
+            {heroImages.map((image, index) => (
+              <motion.img
+                key={image.src}
+                className="hero-background-image"
+                src={image.src}
+                alt=""
+                initial={false}
+                animate={{
+                  opacity: index === activeSlide ? 1 : 0,
+                  scale: index === activeSlide ? 1 : 1.02,
+                }}
+                transition={{ duration: reduce ? 0 : 0.45, ease: "easeInOut" }}
+                style={{ zIndex: index === activeSlide ? 1 : 0 }}
+              />
+            ))}
             <div className="hero-background-overlay" />
             <div
               className="hero-slide-controls"
@@ -228,14 +235,16 @@ function App() {
               <span className="hero-title-techx">TechX</span>
               <span className="hero-title-veda">Veda</span>
             </h1>
+            
             <p className="hero-subtitle">Winter Bootcamp</p>
             <p className="hero-description">
               An eight-day programme combining technical learning, personal
               development and experiential education.
             </p>
+            <br/>
             <div className="hero-meta">
-              <span>13th - 16th December 2026 - IITB Campus</span>
-              <span>17th - 20th December 2026 - Govardhan Eco Village</span>
+              <span>13th - 16th December 2026 @ IIT Bombay Campus</span>
+              <span>17th - 20th December 2026 @ Govardhan Eco Village</span>
             </div>
             <div className="hero-actions">
               <a className="button button-light" href="#register">
@@ -264,16 +273,6 @@ function App() {
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <div className="about-partners" aria-label="Our partners">
-              <p className="partners-kicker">Presented by</p>
-              <div className="partners-logos">
-                {partnerLogos.map((logo) => (
-                  <div className="partner-logo" key={logo.src}>
-                    <img src={logo.src} alt={logo.alt} />
-                  </div>
-                ))}
-              </div>
-            </div>
             <p className="about-kicker">The programme</p>
             <h2>
               What is <span className="hero-title-techx">TechX </span><span className="hero-title-veda">Veda</span>?
@@ -296,6 +295,16 @@ function App() {
               <div>
                 <strong>CULTURE</strong>
                 
+              </div>
+            </div>
+            <div className="about-partners" aria-label="Our partners">
+              <p className="partners-kicker">Presented by</p>
+              <div className="partners-logos">
+                {partnerLogos.map((logo) => (
+                  <div className="partner-logo" key={logo.src}>
+                    <img src={logo.src} alt={logo.alt} />
+                  </div>
+                ))}
               </div>
             </div>
             {/* <div className="about-details">
@@ -374,7 +383,7 @@ function App() {
                   />
                 </div>
                 <div>
-                  <p className="culture-no">0{i + 1}</p>
+                  <p className="culture-no">Culture</p>
                   <h3>{title}</h3>
                   <p>{desc}</p>
                 </div>
@@ -400,9 +409,7 @@ function App() {
             <div>
               <p className="eyebrow">The next chapter</p>
               <h2>
-                Make space
-                <br />
-                <em>for more.</em>
+                Secure <em>your spot</em>
               </h2>
               <p>Register online using the link below.</p>
 
@@ -417,9 +424,21 @@ function App() {
         <div className="footer-brand">
           TechX <em>Veda</em>
         </div>
-        <div>
-          <p className="eyebrow">Winter Bootcamp 2026</p>
-          <p>13-20 December 2026 · Govardhan Ecovillage</p>
+        <div className="footer-contact">
+          <p className="eyebrow">Contact us for any queries</p>
+          <a className="footer-contact-row" href="tel:+919521277960">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.64a2 2 0 0 1-.45 2.11L8 9.75a16 16 0 0 0 6 6l1.28-1.28a2 2 0 0 1 2.11-.45c.86.29 1.74.5 2.64.62A2 2 0 0 1 22 16.92Z" />
+            </svg>
+            <span><strong>Facilitator: Avinash Jha</strong> <span aria-hidden="true">·</span> +91 95212 77960</span>
+          </a>
+          <a className="footer-contact-row" href="mailto:wellnessclubiiita@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="m3 7 9 6 9-6" />
+            </svg>
+            <span>Or email us at: <strong>wellnessclubiiita@gmail.com</strong></span>
+          </a>
         </div>
         <small>TECHX VEDA / 2026</small>
       </footer>
