@@ -10,6 +10,10 @@ const port = process.env.PORT || 5000;
 const serverDirectory = path.dirname(fileURLToPath(import.meta.url));
 const clientBuildDirectory = path.resolve(serverDirectory, "../dist");
 
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.use(cors());
 app.use(express.json());
 
@@ -20,7 +24,7 @@ const requiredText = (maxlength) => ({
   maxlength,
 });
 
-const namePattern = /^[A-Za-z]+(?:\s+[A-Za-z]+)*$/;
+const namePattern = /^[A-Za-z]+(?:[.'\s-]+[A-Za-z]+)*\.?$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phonePattern = /^\d+$/;
 const yearOptions = [
@@ -177,10 +181,11 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.post("/api/registrations", async (req, res) => {
+  const body = req.body || {};
   const registration = {
     fullName: normalise(req.body.fullName),
     email: normalise(req.body.email).toLowerCase(),
-    whatsappNumber: String(req.body.whatsappNumber || ""),
+    whatsappNumber: normalise(req.body.whatsappNumber),
     enrollmentNumber: normalise(req.body.enrollmentNumber) || undefined,
     collegeName: normalise(req.body.collegeName),
     programme: normalise(req.body.programme),
@@ -253,3 +258,5 @@ if (!databaseUrl) {
 app.listen(port, "0.0.0.0", () =>
   console.log(`TechX Veda service listening on ${port}`),
 );
+
+
