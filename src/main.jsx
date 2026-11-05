@@ -437,7 +437,7 @@ function App() {
               <rect x="3" y="5" width="18" height="14" rx="2" />
               <path d="m3 7 9 6 9-6" />
             </svg>
-            <span>Or email us at: <strong>wellnessclubiiita@gmail.com</strong></span>
+            <span>Or email us at: <strong>techxveda26@gmail.com</strong></span>
           </a>
         </div>
         <small>TECHX VEDA / 2026</small>
